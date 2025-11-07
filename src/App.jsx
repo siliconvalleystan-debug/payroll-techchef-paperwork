@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import html2pdf from "html2pdf.js";
 import toast from "react-hot-toast";
@@ -15,8 +15,15 @@ import AssetUpload from "./components/AssetUpload.jsx";
 import EmployeeRow from "./components/EmployeeRow.jsx";
 import Payslip from "./components/Payslip.jsx";
 import Modal from "./components/Modal.jsx";
+import TechchefInvoiceTab from "./components/TechchefInvoiceTab.jsx";
+
+const TAB_OPTIONS = [
+  { id: "payroll", label: "Salary Pay Slip Generator" },
+  { id: "techchef", label: "Techchef Invoice" },
+];
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState("payroll");
   const [employees, setEmployees] = useState(() => [createEmptyEmployee()]);
   const [errors, setErrors] = useState(new Set());
   const [previewData, setPreviewData] = useState(null);
@@ -327,9 +334,18 @@ export default function App() {
     return <Payslip data={previewData} assets={assets} />;
   }, [assets, previewData]);
 
-  return (
-    <main className="layout">
-      <section className="panel">
+  useEffect(() => {
+    if (activeTab !== "payroll" && showModal) {
+      setShowModal(false);
+      setModalType(null);
+      setPendingRowIndex(null);
+    }
+  }, [activeTab, showModal]);
+
+  const payrollLayout = (
+    <>
+      <main className="layout">
+        <section className="panel">
         <h1>Salary Pay Slip Generator</h1>
         <p className="description">
           Enter employee payroll details row-by-row and export polished pay slip PDFs that mirror the
@@ -403,9 +419,9 @@ export default function App() {
             </tbody>
           </table>
         </div>
-      </section>
+        </section>
 
-      <section className="panel preview-panel">
+        <section className="panel preview-panel">
         <div className="preview-header">
           <h2>Latest Pay Slip Preview</h2>
           {previewData && (
@@ -422,7 +438,8 @@ export default function App() {
           )}
         </div>
         <div className="preview-surface">{previewContent}</div>
-      </section>
+        </section>
+      </main>
 
       <Modal
         isOpen={showModal}
@@ -449,6 +466,25 @@ export default function App() {
           </button>
         </div>
       </Modal>
-    </main>
+    </>
+  );
+
+  return (
+    <div className="app-shell">
+      <div className="tab-switcher">
+        {TAB_OPTIONS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            className={`tab-switcher__btn${activeTab === tab.id ? " is-active" : ""}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === "payroll" ? payrollLayout : <TechchefInvoiceTab />}
+    </div>
   );
 }
