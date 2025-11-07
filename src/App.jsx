@@ -342,6 +342,31 @@ export default function App() {
     }
   }, [activeTab, showModal]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab");
+    const validTab = TAB_OPTIONS.find((tab) => tab.id === tabParam);
+    if (validTab) {
+      setActiveTab(validTab.id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const url = new URL(window.location.href);
+    if (activeTab === "payroll") {
+      url.searchParams.delete("tab");
+    } else {
+      url.searchParams.set("tab", activeTab);
+    }
+    window.history.replaceState(null, "", url);
+  }, [activeTab]);
+
   const payrollLayout = (
     <>
       <main className="layout">
