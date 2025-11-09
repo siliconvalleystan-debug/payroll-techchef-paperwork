@@ -1,7 +1,7 @@
 import React from "react";
 
 const COMPANY_INFO = [
-  "ChatChef",
+  "Thunder Digital Kitchen Ltd.",
   "200 - 13571 Commerce Pkwy",
   "Richmond, British Columbia V6V 2R2",
   "Canada",
@@ -37,7 +37,7 @@ export default function TechchefInvoicePreview({ data }) {
             </div>
           </dl>
         </div>
-        <div className="techchef-wordmark">ChatChef</div>
+        <div className="techchef-wordmark">Thunder Digital Kitchen Ltd.</div>
       </header>
 
       <div className="techchef-addresses">
@@ -59,35 +59,37 @@ export default function TechchefInvoicePreview({ data }) {
         </div>
       </div>
 
-      <table className="techchef-line-table">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Tax</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.lines.map((line) => (
-            <tr key={line.id}>
-              <td>{line.description}</td>
-              <td>{line.quantity}</td>
-              <td>{line.unitPriceDisplay}</td>
-              <td>{line.taxLabel}</td>
-              <td>{line.amountDisplay}</td>
-            </tr>
-          ))}
-          {data.lines.length === 0 && (
+      <div className="techchef-line-table-wrapper">
+        <table className="techchef-line-table">
+          <thead>
             <tr>
-              <td colSpan="5" style={{ textAlign: "center", color: "#94a3b8" }}>
-                Add invoice details to populate this section.
-              </td>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Unit Price</th>
+              <th>Tax</th>
+              <th>Amount</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.lines.map((line) => (
+              <tr key={line.id}>
+                <td>{line.description}</td>
+                <td>{line.quantity}</td>
+                <td>{line.unitPriceDisplay}</td>
+                <td>{line.taxLabel}</td>
+                <td>{line.amountDisplay}</td>
+              </tr>
+            ))}
+            {data.lines.length === 0 && (
+              <tr>
+                <td colSpan="5" style={{ textAlign: "center", color: "#94a3b8" }}>
+                  Add invoice details to populate this section.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {data.notes && (
         <div className="techchef-notes">

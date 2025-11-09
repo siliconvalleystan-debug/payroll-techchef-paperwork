@@ -660,7 +660,8 @@ tbody input[type="number"]::-webkit-outer-spin-button {
   border-radius: 16px;
   padding: 2rem;
   color: #0f172a;
-  max-width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -702,9 +703,13 @@ tbody input[type="number"]::-webkit-outer-spin-button {
 
 .techchef-wordmark {
   font-family: "Times New Roman", serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #cbd5f5;
   font-weight: 700;
+  text-align: right;
+  max-width: 220px;
+  word-break: break-word;
+  line-height: 1.1;
 }
 
 .techchef-addresses {
@@ -734,10 +739,27 @@ tbody input[type="number"]::-webkit-outer-spin-button {
   font-size: 1.15rem;
 }
 
+.techchef-line-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+.techchef-line-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.techchef-line-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.18);
+  border-radius: 999px;
+}
+
 .techchef-line-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1.5rem;
+  table-layout: fixed;
+  min-width: 500px;
 }
 
 .techchef-line-table th,
@@ -755,10 +777,32 @@ tbody input[type="number"]::-webkit-outer-spin-button {
   color: #94a3b8;
 }
 
-.techchef-line-table td:nth-child(2),
-.techchef-line-table td:nth-child(3),
-.techchef-line-table td:nth-child(4),
+.techchef-line-table th:first-child,
+.techchef-line-table td:first-child {
+  width: 40%;
+}
+
+.techchef-line-table th:nth-child(2),
+.techchef-line-table td:nth-child(2) {
+  width: 10%;
+  text-align: right;
+}
+
+.techchef-line-table th:nth-child(3),
+.techchef-line-table td:nth-child(3) {
+  width: 15%;
+  text-align: right;
+}
+
+.techchef-line-table th:nth-child(4),
+.techchef-line-table td:nth-child(4) {
+  width: 10%;
+  text-align: right;
+}
+
+.techchef-line-table th:nth-child(5),
 .techchef-line-table td:nth-child(5) {
+  width: 25%;
   text-align: right;
 }
 
@@ -1285,6 +1329,47 @@ tbody input[type="number"]::-webkit-outer-spin-button {
   .modal-body,
   .modal-footer {
     padding: 1.25rem;
+  }
+
+  .techchef-invoice {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .techchef-invoice__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .techchef-wordmark {
+    text-align: left;
+    max-width: none;
+    font-size: 1.65rem;
+  }
+
+  .techchef-addresses {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .techchef-summary {
+    margin-left: 0;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .techchef-invoice {
+    padding: 1.25rem;
+  }
+
+  .techchef-total-banner {
+    font-size: 0.95rem;
+  }
+
+  .techchef-line-table {
+    min-width: 460px;
   }
 }
 
